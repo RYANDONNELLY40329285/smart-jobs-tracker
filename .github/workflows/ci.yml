@@ -12,7 +12,10 @@ jobs:
 
     defaults:
       run:
-        working-directory: backend   
+        working-directory: backend
+
+    env:
+      DATABASE_URL: "file:./dev.db"   
 
     steps:
       - name: Checkout repo
