@@ -21,57 +21,79 @@ ChartJS.register(
 function AnalyticsChart({ analytics }) {
   if (!analytics) return null;
 
-  // BAR (Applications breakdown)
-const barData = {
-  labels: ["Total", "Interviews", "Offers"],
-  datasets: [
-    {
-      label: "Applications",
-      data: [
-        analytics.totalApplications,
-        analytics.interviews,
-        analytics.offers
-      ],
-      backgroundColor: [
-        "#6b7280", // grey
-        "#3b82f6", // blue
-        "#10b981"  // green
-      ],
-      borderRadius: 6
-    }
-  ]
-};
+  //  SAFE BAR DATA
+  const barData = {
+    labels: ["Total", "Interviews", "Offers"],
+    datasets: [
+      {
+        label: "Applications",
+        data: [
+          analytics.totalApplications || 0,
+          analytics.interviews || 0,
+          analytics.offers || 0
+        ],
+        backgroundColor: ["#6b7280", "#3b82f6", "#10b981"],
+        borderRadius: 8,
+        barThickness: 40
+      }
+    ]
+  };
 
-  //  DOUGHNUT (conversion)
- const doughnutData = {
-  labels: ["Responses", "No Response"],
-  datasets: [
-    {
-      data: [
-        parseFloat(analytics.responseRate),
-        100 - parseFloat(analytics.responseRate)
-      ],
-      backgroundColor: [
-        "#10b981", // green (response)
-        "#374151"  // dark grey (no response)
-      ],
-      borderWidth: 0
+  // SAFE DOUGHNUT DATA
+  const response = parseFloat(analytics.responseRate) || 0;
+
+  const doughnutData = {
+    labels: ["Responses", "No Response"],
+    datasets: [
+      {
+        data: [response, 100 - response],
+        backgroundColor: ["#10b981", "#374151"],
+        borderWidth: 0,
+        cutout: "70%"
+      }
+    ]
+  };
+
+  // 🎨 OPTIONS (clean dark theme)
+  const options = {
+    responsive: true,
+    animation: {
+      duration: 800,
+      easing: "easeOutQuart"
+    },
+    plugins: {
+      legend: {
+        labels: {
+          color: "#e5e5e5"
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: { color: "#9ca3af" },
+        grid: { color: "rgba(255,255,255,0.05)" }
+      },
+      y: {
+        ticks: { color: "#9ca3af" },
+        grid: { color: "rgba(255,255,255,0.05)" }
+      }
     }
-  ]
-};
+  };
 
   return (
-    <div style={{ marginTop: "30px" }}>
-      <h2> Analytics</h2>
+    <div style={{ marginTop: "40px" }}>
+      <h2>Analytics</h2>
 
       <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-        <div style={{ width: "400px" }}>
-          <Bar data={barData} />
+        
+        <div style={{ width: "420px" }}>
+          <Bar data={barData} options={options} />
         </div>
 
         <div style={{ width: "300px" }}>
           <Doughnut data={doughnutData} />
         </div>
+
       </div>
     </div>
   );

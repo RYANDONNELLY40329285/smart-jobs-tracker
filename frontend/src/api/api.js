@@ -22,3 +22,6 @@ export const getNotes = (jobId) =>
 //delete
 export const deleteJob = (id) =>
   axios.delete(`http://localhost:5000/jobs/${id}`);
+
+export const getWeeklyAnalytics = () =>
+  axios.get("http://localhost:5000/analytics/weekly");

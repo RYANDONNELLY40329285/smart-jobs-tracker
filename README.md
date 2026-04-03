@@ -1,209 +1,193 @@
-#  Smart Job Tracker
+# 🚀 Smart Job Tracker  
 ![CI](https://github.com/RYANDONNELLY40329285/smart-jobs-tracker/actions/workflows/ci.yml/badge.svg)
 ![Node.js](https://img.shields.io/badge/Node.js-Backend-green)
 ![Prisma](https://img.shields.io/badge/Prisma-ORM-blue)
 ![SQLite](https://img.shields.io/badge/SQLite-Database-lightgrey)
 ![Coverage](https://img.shields.io/badge/coverage-80%25-brightgreen)
 
-
-A full-stack job application tracking system with analytics, built to optimise and measure job search performance.
-
----
-
-##  Overview
-
-Smart Job Tracker is a backend-focused system designed to track job applications, monitor progress, and provide insights into application success rates.
-
-It supports full job lifecycle tracking, interview management, and analytics to help users understand and improve their job search strategy.
+A full-stack job application tracking system with built-in analytics to measure and improve job search performance.
 
 ---
 
-##  Features
+## 📌 Overview
 
-###  Job Management
+Smart Job Tracker is a **data-driven application tracking system** designed to:
 
-* Create, update, and delete job applications
-* Track status:
-  **Applied → Screening → Interview → Offer → Rejected**
-* Enforced status transitions (prevents invalid progression)
+- Track job applications end-to-end  
+- Enforce structured workflows  
+- Provide real-time analytics on job search performance  
 
-###  Smart Classification
-
-* Automatically categorises roles:
-
-  * Engineering
-  * Data
-  * Support
-  * Other
-
-### Notes System
-
-* Add notes to each job
-* Track thoughts, feedback, and application details
-
-### Interview Tracking
-
-* Store interview stages and dates
-* Record outcomes
-
-###  Analytics
-
-* Total applications
-* Interview count
-* Offer count
-* Response rate (%)
-* Weekly application trends
+It combines a **Node.js + Prisma backend** with a **React frontend dashboard**, turning raw job applications into actionable insights.
 
 ---
 
-## Tech Stack
+## ✨ Features
 
-* **Backend:** Node.js, Express
-* **Database:** SQLite (via Prisma ORM)
-* **ORM:** Prisma
-* **Testing Tools:** Postman / Thunder Client / curl
-* **Dev Tools:** Nodemon
+### 📂 Job Management
+
+- Create, update, and delete job applications  
+- Track application lifecycle:
+
+APPLIED → SCREENING → INTERVIEW → OFFER
+
+- Enforced **valid status transitions** (prevents invalid states)
 
 ---
 
-##  Project Structure
+### 🧠 Smart Role Classification
 
-```
+Automatically categorises roles based on title:
+
+- Engineering  
+- Data  
+- Support  
+- Other  
+
+---
+
+### 📝 Notes System
+
+- Attach notes to each job  
+- Track feedback, thoughts, and follow-ups  
+
+---
+
+### 🎤 Interview Tracking
+
+- Store interview stages and dates  
+- Record outcomes  
+
+---
+
+### 📊 Analytics Dashboard
+
+- Total applications  
+- Interviews  
+- Offers  
+- Response rate (%)  
+- Visualised with charts (bar + doughnut)
+
+---
+
+## 🖥️ Frontend (React)
+
+- Clean dashboard UI  
+- Status-based job cards  
+- Notes + interview tracking per job  
+- Real-time analytics visualisation  
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+- Node.js  
+- Express  
+- Prisma ORM  
+
+### Database
+- SQLite  
+
+### Frontend
+- React  
+- Chart.js (analytics visualisation)
+
+### Testing & Dev Tools
+- Jest + Supertest (API testing)  
+- Nodemon  
+- Postman / Thunder Client  
+
+---
+
+## 📁 Project Structure
+
 backend/
 ├── src/
-│   ├── db/
-│   │   └── prisma.js
-│   ├── routes/
-│   │   ├── jobs.js
-│   │   └── analytics.js
-│   ├── app.js
-│   └── server.js
+│ ├── db/
+│ │ └── prisma.js
+│ ├── routes/
+│ │ ├── jobs.js
+│ │ └── analytics.js
+│ ├── app.js
+│ └── server.js
 ├── prisma/
-│   └── schema.prisma
-└── package.json
-```
+│ └── schema.prisma
+
+frontend/
+├── src/
+│ ├── components/
+│ │ ├── JobCard.js
+│ │ └── AnalyticsChart.js
+│ ├── api/
+│ │ └── api.js
+│ ├── App.js
+│ └── styles.css
+
 
 ---
 
-##  Setup & Installation
+## ⚙️ Setup & Installation
 
 ### 1. Clone repo
 
-```
-git clone <your-repo-url>
-cd smart-job-tracker/backend
-```
+```bash
+git clone https://github.com/RYANDONNELLY40329285/smart-jobs-tracker
+cd smart-jobs-tracker
 
-### 2. Install dependencies
-
-```
+2. Backend setup
+cd backend
 npm install
-```
-
-### 3. Setup database
-
-```
 npx prisma migrate dev --name init
-```
-
-### 4. Run server
-
-```
 npm run dev
-```
 
 Server runs at:
- http://localhost:5000
+👉 http://localhost:5000
 
----
+3. Frontend setup
+cd frontend
+npm install
+npm start
 
-## API Examples
+Frontend runs at:
+👉 http://localhost:3000
 
-### Create Job
-
-```
+🔌 API Examples
+Create Job
 POST /jobs
-```
-
-```json
 {
   "title": "Graduate Software Engineer",
   "company": "IBM",
   "location": "Belfast"
 }
-```
-
----
-
-### Update Status
-
-```
+Update Status
 PUT /jobs/:id
-```
-
-```json
 {
   "status": "INTERVIEW"
 }
-```
-
----
-
-### Get Analytics
-
-```
-GET /analytics/summary
-GET /analytics/weekly
-```
-
----
-
-### Add Note
-
-```
+Add Note
 POST /jobs/:id/notes
-```
-
----
-
-### Add Interview
-
-```
+Add Interview
 POST /jobs/:id/interviews
-```
-
----
-
-## Example Output
-
-```json
+Get Analytics
+GET /analytics/summary
+📊 Example Output
 {
   "totalApplications": 120,
   "interviews": 8,
   "offers": 2,
   "responseRate": "6.67%"
 }
-```
-
----
-
-## Why I Built This
+🧠 Key Engineering Concepts
+RESTful API design with validation
+Business logic enforcement (state transitions)
+Relational data modelling (Jobs ↔ Notes ↔ Interviews)
+Data aggregation & analytics
+Full-stack integration (API + frontend)
+Automated testing & CI pipeline
+💡 Why I Built This
 
 After applying to hundreds of roles, I wanted a system to:
 
-* Track applications effectively
-* Analyse success rates
-* Improve my job search strategy using data
-
----
-
-##  Key Learnings
-
-* Designing RESTful APIs with proper validation
-* Working with relational data using Prisma
-* Implementing business logic (status transitions)
-* Building analytics from real-world data
-* Structuring scalable backend applications
-
----
-
+Track applications in a structured way
+Identify what was working
+Improve my job search using real data

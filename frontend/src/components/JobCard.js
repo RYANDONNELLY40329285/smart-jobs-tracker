@@ -98,7 +98,7 @@ return (
 
     {/* NOTES */}
     <div style={{ marginTop: "10px" }}>
-      <h4>📝 Notes</h4>
+      <h4> Notes</h4>
 
       {notes.map((note) => (
         <div key={note.id}>- {note.content}</div>
