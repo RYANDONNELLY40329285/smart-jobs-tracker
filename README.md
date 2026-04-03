@@ -1,8 +1,8 @@
 # 🚀 Smart Job Tracker  
-![CI](https://github.com/RYANDONNELLY40329285/smart-jobs-tracker/actions/workflows/ci.yml/badge.svg)
-![Node.js](https://img.shields.io/badge/Node.js-Backend-green)
-![Prisma](https://img.shields.io/badge/Prisma-ORM-blue)
-![SQLite](https://img.shields.io/badge/SQLite-Database-lightgrey)
+![CI](https://github.com/RYANDONNELLY40329285/smart-jobs-tracker/actions/workflows/ci.yml/badge.svg)  
+![Node.js](https://img.shields.io/badge/Node.js-Backend-green)  
+![Prisma](https://img.shields.io/badge/Prisma-ORM-blue)  
+![SQLite](https://img.shields.io/badge/SQLite-Database-lightgrey)  
 ![Coverage](https://img.shields.io/badge/coverage-80%25-brightgreen)
 
 A full-stack job application tracking system with built-in analytics to measure and improve job search performance.
@@ -28,15 +28,15 @@ It combines a **Node.js + Prisma backend** with a **React frontend dashboard**, 
 - Create, update, and delete job applications  
 - Track application lifecycle:
 
-APPLIED → SCREENING → INTERVIEW → OFFER
+```
+APPLIED → SCREENING → INTERVIEW → OFFER → REJECTED
+```
 
-- Enforced **valid status transitions** (prevents invalid states)
+- Enforced **valid status transitions**
 
 ---
 
 ### 🧠 Smart Role Classification
-
-Automatically categorises roles based on title:
 
 - Engineering  
 - Data  
@@ -47,8 +47,7 @@ Automatically categorises roles based on title:
 
 ### 📝 Notes System
 
-- Attach notes to each job  
-- Track feedback, thoughts, and follow-ups  
+- Add notes to each job  
 
 ---
 
@@ -65,43 +64,22 @@ Automatically categorises roles based on title:
 - Interviews  
 - Offers  
 - Response rate (%)  
-- Visualised with charts (bar + doughnut)
-
----
-
-## 🖥️ Frontend (React)
-
-- Clean dashboard UI  
-- Status-based job cards  
-- Notes + interview tracking per job  
-- Real-time analytics visualisation  
+- Chart visualisation  
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Backend
-- Node.js  
-- Express  
-- Prisma ORM  
-
-### Database
-- SQLite  
-
-### Frontend
-- React  
-- Chart.js (analytics visualisation)
-
-### Testing & Dev Tools
-- Jest + Supertest (API testing)  
-- Nodemon  
-- Postman / Thunder Client  
+Backend: Node.js, Express, Prisma  
+Database: SQLite  
+Frontend: React, Chart.js  
+Testing: Jest, Supertest  
 
 ---
 
 ## 📁 Project Structure
 
-```bash
+```
 backend/
 ├── src/
 │   ├── db/
@@ -123,71 +101,93 @@ frontend/
 │   │   └── api.js
 │   ├── App.js
 │   └── styles.css
+```
 
 ---
 
 ## ⚙️ Setup & Installation
 
-### 1. Clone repo
+### Clone repo
 
-```bash
+```
 git clone https://github.com/RYANDONNELLY40329285/smart-jobs-tracker
 cd smart-jobs-tracker
+```
 
-2. Backend setup
+### Backend
+
+```
 cd backend
 npm install
 npx prisma migrate dev --name init
 npm run dev
+```
 
-Server runs at:
-👉 http://localhost:5000
+Server: http://localhost:5000
 
-3. Frontend setup
+### Frontend
+
+```
 cd frontend
 npm install
 npm start
+```
 
-Frontend runs at:
-👉 http://localhost:3000
+Frontend: http://localhost:3000
 
-🔌 API Examples
-Create Job
+---
+
+## 🔌 API Examples
+
+### Create Job
+
 POST /jobs
+
+```
 {
   "title": "Graduate Software Engineer",
   "company": "IBM",
   "location": "Belfast"
 }
-Update Status
+```
+
+---
+
+### Update Status
+
 PUT /jobs/:id
+
+```
 {
   "status": "INTERVIEW"
 }
-Add Note
-POST /jobs/:id/notes
-Add Interview
-POST /jobs/:id/interviews
-Get Analytics
+```
+
+---
+
+### Get Analytics
+
 GET /analytics/summary
-📊 Example Output
+
+---
+
+## 📊 Example Output
+
+```
 {
   "totalApplications": 120,
   "interviews": 8,
   "offers": 2,
   "responseRate": "6.67%"
 }
-🧠 Key Engineering Concepts
-RESTful API design with validation
-Business logic enforcement (state transitions)
-Relational data modelling (Jobs ↔ Notes ↔ Interviews)
-Data aggregation & analytics
-Full-stack integration (API + frontend)
-Automated testing & CI pipeline
-💡 Why I Built This
+```
+
+---
+
+## 💡 Why I Built This
 
 After applying to hundreds of roles, I wanted a system to:
 
-Track applications in a structured way
-Identify what was working
-Improve my job search using real data
+- Track applications properly  
+- Analyse results  
+- Improve my job search using data  
