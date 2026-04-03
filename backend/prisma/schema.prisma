@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Job {
+  id           Int        @id @default(autoincrement())
+  title        String
+  company      String
+  location     String?
+  link         String?
+  status       JobStatus  @default(APPLIED)
+  roleType     String?
+  dateApplied  DateTime   @default(now())
+  createdAt    DateTime   @default(now())
+
+  notes        Note[]
+  interviews   Interview[]
+}
+
+model Note {
+  id        Int      @id @default(autoincrement())
+  content   String
+  job       Job      @relation(fields: [jobId], references: [id])
+  jobId     Int
+  createdAt DateTime @default(now())
+}
+
+model Interview {
+  id        Int      @id @default(autoincrement())
+  stage     String
+  date      DateTime
+  outcome   String?
+  job       Job      @relation(fields: [jobId], references: [id])
+  jobId     Int
+}
+
+enum JobStatus {
+  APPLIED
+  SCREENING
+  INTERVIEW
+  OFFER
+  REJECTED
+}
