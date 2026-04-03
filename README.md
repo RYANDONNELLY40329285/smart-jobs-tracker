@@ -101,28 +101,27 @@ Automatically categorises roles based on title:
 
 ## 📁 Project Structure
 
-backend/
+*backend/
 ├── src/
-│ ├── db/
-│ │ └── prisma.js
-│ ├── routes/
-│ │ ├── jobs.js
-│ │ └── analytics.js
-│ ├── app.js
-│ └── server.js
+│   ├── db/
+│   │   └── prisma.js
+│   ├── routes/
+│   │   ├── jobs.js
+│   │   └── analytics.js
+│   ├── app.js
+│   └── server.js
 ├── prisma/
-│ └── schema.prisma
+│   └── schema.prisma
 
 frontend/
 ├── src/
-│ ├── components/
-│ │ ├── JobCard.js
-│ │ └── AnalyticsChart.js
-│ ├── api/
-│ │ └── api.js
-│ ├── App.js
-│ └── styles.css
-
+│   ├── components/
+│   │   ├── JobCard.js
+│   │   └── AnalyticsChart.js
+│   ├── api/
+│   │   └── api.js
+│   ├── App.js
+│   └── styles.css**
 
 ---
 
