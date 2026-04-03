@@ -11,13 +11,12 @@ function App() {
   const [company, setCompany] = useState("");
   const [location, setLocation] = useState("");
   const [link, setLink] = useState("");
+  const [search, setSearch] = useState("");
 
   const loadJobs = async () => {
     const res = await getJobs();
     setJobs(res.data);
   };
-
-  
 
   const loadAnalytics = async () => {
     try {
@@ -53,87 +52,99 @@ function App() {
     setLink("");
 
     refresh();
-
   };
 
-  
+  return (
+    <div className="container">
+      <h1> Smart Job Tracker</h1>
 
-return (
-  <div className="container">
-    <h1> Smart Job Tracker</h1>
-
-    {/* FORM */}
-    <div className="form">
+      {/* SEARCH */}
       <input
-        placeholder="Job Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Search by title or company..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        style={{
+          marginBottom: "20px",
+          width: "100%",
+          padding: "10px",
+          borderRadius: "6px"
+        }}
       />
 
-      <input
-        placeholder="Company"
-        value={company}
-        onChange={(e) => setCompany(e.target.value)}
-      />
+      {/* FORM */}
+      <div className="form">
+        <input
+          placeholder="Job Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
 
-      <input
-        placeholder="Location"
-        value={location}
-        onChange={(e) => setLocation(e.target.value)}
-      />
+        <input
+          placeholder="Company"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+        />
 
-      <input
-        placeholder="Job Link"
-        value={link}
-        onChange={(e) => setLink(e.target.value)}
-      />
+        <input
+          placeholder="Location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+        />
 
-      <button className="btn-primary" onClick={handleCreate}>
-        Add Job
-      </button>
+        <input
+          placeholder="Job Link"
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
+        />
+
+        <button className="btn-primary" onClick={handleCreate}>
+          Add Job
+        </button>
+      </div>
+
+      {/* ANALYTICS */}
+      {analytics && (
+        <div className="analytics">
+          <div className="stat total">
+            <h3>{analytics.totalApplications}</h3>
+            <p>Total</p>
+          </div>
+
+          <div className="stat interviews">
+            <h3>{analytics.interviews}</h3>
+            <p>Interviews</p>
+          </div>
+
+          <div className="stat offers">
+            <h3>{analytics.offers}</h3>
+            <p>Offers</p>
+          </div>
+
+          <div className="stat rate">
+            <h3>{analytics.responseRate}</h3>
+            <p>Response Rate</p>
+          </div>
+        </div>
+      )}
+
+      {analytics && <AnalyticsChart analytics={analytics} />}
+
+      {/* JOBS */}
+      <div>
+        {jobs
+          .filter((job) => {
+            const term = search.toLowerCase();
+            return (
+              job.title.toLowerCase().includes(term) ||
+              job.company.toLowerCase().includes(term)
+            );
+          })
+          .map((job) => (
+            <JobCard key={job.id} job={job} refresh={refresh} />
+          ))}
+      </div>
     </div>
-
-    {/* ANALYTICS */}
-    {analytics && (
-<div className="analytics">
-  <div className="stat total">
-    <h3>{analytics.totalApplications}</h3>
-    <p>Total</p>
-  </div>
-
-  <div className="stat interviews">
-    <h3>{analytics.interviews}</h3>
-    <p>Interviews</p>
-  </div>
-
-  <div className="stat offers">
-    <h3>{analytics.offers}</h3>
-    <p>Offers</p>
-  </div>
-
-  <div className="stat rate">
-    <h3>{analytics.responseRate}</h3>
-    <p>Response Rate</p>
-  </div>
-</div>
-
-
-
-    )}
-
-    {analytics && <AnalyticsChart analytics={analytics} />}
-
-    {/* JOBS */}
-    <div>
-      {jobs.map((job) => (
-        <JobCard key={job.id} job={job} refresh={refresh} />
-      ))}
-    </div>
-  </div>
-);
-
-
-
+  );
 }
 
 export default App;
