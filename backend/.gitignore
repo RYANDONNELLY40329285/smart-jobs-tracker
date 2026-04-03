@@ -2,7 +2,8 @@
 node_modules/
 
 # Env files (VERY IMPORTANT)
-.env
+.env*
+test.db
 
 # Logs
 logs
