@@ -145,4 +145,102 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// ==========================
+// ADD NOTE to a job
+// ==========================
+router.post("/:id/notes", async (req, res) => {
+  try {
+    const jobId = Number(req.params.id);
+    const { content } = req.body;
+
+    if (!content) {
+      return res.status(400).json({ error: "Note content required" });
+    }
+
+    const note = await prisma.note.create({
+      data: {
+        content,
+        jobId
+      }
+    });
+
+    res.status(201).json(note);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to add note" });
+  }
+});
+
+// ==========================
+// GET notes for a job
+// ==========================
+router.get("/:id/notes", async (req, res) => {
+  try {
+    const jobId = Number(req.params.id);
+
+    const notes = await prisma.note.findMany({
+      where: { jobId },
+      orderBy: { createdAt: "desc" }
+    });
+
+    res.json(notes);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch notes" });
+  }
+});
+
+
+
+// ==========================
+// ADD interview
+// ==========================
+router.post("/:id/interviews", async (req, res) => {
+  try {
+    const jobId = Number(req.params.id);
+    const { stage, date, outcome } = req.body;
+
+    if (!stage || !date) {
+      return res.status(400).json({
+        error: "Stage and date are required"
+      });
+    }
+
+    const interview = await prisma.interview.create({
+      data: {
+        stage,
+        date: new Date(date),
+        outcome,
+        jobId
+      }
+    });
+
+    res.status(201).json(interview);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to add interview" });
+  }
+});
+
+// ==========================
+// GET interviews
+// ==========================
+router.get("/:id/interviews", async (req, res) => {
+  try {
+    const jobId = Number(req.params.id);
+
+    const interviews = await prisma.interview.findMany({
+      where: { jobId },
+      orderBy: { date: "desc" }
+    });
+
+    res.json(interviews);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch interviews" });
+  }
+});
+
+
+
 export default router;
