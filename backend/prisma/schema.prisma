@@ -23,20 +23,21 @@ model Job {
 }
 
 model Note {
-  id        Int      @id @default(autoincrement())
-  content   String
-  job       Job      @relation(fields: [jobId], references: [id])
-  jobId     Int
-  createdAt DateTime @default(now())
+  id      Int    @id @default(autoincrement())
+  content String
+  jobId   Int
+
+  job Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
 }
 
 model Interview {
-  id        Int      @id @default(autoincrement())
-  stage     String
-  date      DateTime
-  outcome   String?
-  job       Job      @relation(fields: [jobId], references: [id])
-  jobId     Int
+  id      Int      @id @default(autoincrement())
+  stage   String
+  date    DateTime
+  outcome String?
+  jobId   Int
+
+  job Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
 }
 
 enum JobStatus {

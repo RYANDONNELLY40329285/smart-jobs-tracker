@@ -1,0 +1,155 @@
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #0a0a0a;
+  color: #e5e5e5;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 30px 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 600;
+}
+
+/* FORM */
+.form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+input {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #262626;
+  background: #111111;
+  color: #e5e5e5;
+  outline: none;
+}
+
+input::placeholder {
+  color: #737373;
+}
+
+/* BUTTONS */
+button {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Primary (neutral dark) */
+.btn-primary {
+  background: #1f2937;
+  color: #e5e5e5;
+}
+
+/* Secondary */
+.btn-secondary {
+  background: #171717;
+  color: #d4d4d4;
+}
+
+/* Danger */
+.btn-danger {
+  background: #2a0f0f;
+  color: #fca5a5;
+}
+
+/* CARD */
+.card {
+  background: #111111;
+  border: 1px solid #262626;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  transition: all 0.2s ease;
+}
+
+/* subtle hover glow */
+.card:hover {
+  border-color: #3f3f46;
+  transform: translateY(-2px);
+}
+
+
+.card.applied {
+  border-left: 4px solid #6b7280; /* grey */
+}
+
+.card.screening {
+  border-left: 4px solid #f59e0b; /* amber */
+}
+
+.card.interview {
+  border-left: 4px solid #3b82f6; /* soft blue */
+}
+
+.card.offer {
+  border-left: 4px solid #10b981; /* green */
+}
+
+.card.rejected {
+  border-left: 4px solid #ef4444; /* red */
+}
+
+/* ANALYTICS */
+.analytics {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.stat {
+  flex: 1;
+  background: #111111;
+  border: 1px solid #262626;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* subtle coloured top borders */
+.stat.total {
+  border-top: 3px solid #6b7280;
+}
+
+.stat.interviews {
+  border-top: 3px solid #3b82f6;
+}
+
+.stat.offers {
+  border-top: 3px solid #10b981;
+}
+
+.stat h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.stat p {
+  margin: 5px 0 0;
+  color: #9ca3af;
+}
+
+/* LINKS */
+a {
+  color: #a3a3a3;
+  text-decoration: none;
+}
+
+canvas {
+  background: #111;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #262626;
+}

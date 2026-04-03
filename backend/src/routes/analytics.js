@@ -16,16 +16,35 @@ router.get("/summary", async (req, res) => {
       where: { status: "OFFER" }
     });
 
-    const responseRate = total === 0 ? 0 : (interviews / total) * 100;
+
+
+    const responses = await prisma.job.count({
+      where: {
+        status: {
+          in: ["SCREENING", "INTERVIEW", "OFFER"]
+        }
+      }
+    });
+
+    const responseRate =
+      total === 0 ? "0%" : ((responses / total) * 100).toFixed(2) + "%";
 
     res.json({
       totalApplications: total,
       interviews,
       offers,
-      responseRate: responseRate.toFixed(2) + "%"
+      responseRate
     });
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+
+    res.json({
+      totalApplications: 0,
+      interviews: 0,
+      offers: 0,
+      responseRate: "0%"
+    });
   }
 });
 

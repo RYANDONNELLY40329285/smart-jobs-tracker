@@ -188,10 +188,10 @@ router.get("/:id/notes", async (req, res) => {
   try {
     const jobId = Number(req.params.id);
 
-    const notes = await prisma.note.findMany({
-      where: { jobId },
-      orderBy: { createdAt: "desc" }
-    });
+const notes = await prisma.note.findMany({
+  where: { jobId },
+  orderBy: { id: "desc" }
+});
 
     res.json(notes);
   } catch (err) {
