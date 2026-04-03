@@ -1,4 +1,4 @@
-# 🚀 Smart Job Tracker  
+#  Smart Job Tracker  
 ![CI](https://github.com/RYANDONNELLY40329285/smart-jobs-tracker/actions/workflows/ci.yml/badge.svg)  
 ![Node.js](https://img.shields.io/badge/Node.js-Backend-green)  
 ![Prisma](https://img.shields.io/badge/Prisma-ORM-blue)  
@@ -9,7 +9,7 @@ A full-stack job application tracking system with built-in analytics to measure 
 
 ---
 
-## 📌 Overview
+## Overview
 
 Smart Job Tracker is a **data-driven application tracking system** designed to:
 
@@ -21,22 +21,22 @@ It combines a **Node.js + Prisma backend** with a **React frontend dashboard**, 
 
 ---
 
-## ✨ Features
+## Features
 
-### 📂 Job Management
+###  Job Management
 
 - Create, update, and delete job applications  
 - Track application lifecycle:
 
 ```
-APPLIED → SCREENING → INTERVIEW → OFFER → REJECTED
+APPLIED → SCREENING → INTERVIEW → OFFER 
 ```
 
 - Enforced **valid status transitions**
 
 ---
 
-### 🧠 Smart Role Classification
+###  Smart Role Classification
 
 - Engineering  
 - Data  
@@ -45,20 +45,19 @@ APPLIED → SCREENING → INTERVIEW → OFFER → REJECTED
 
 ---
 
-### 📝 Notes System
+###  Notes System
 
 - Add notes to each job  
 
 ---
 
-### 🎤 Interview Tracking
+### Interview Tracking
 
-- Store interview stages and dates  
-- Record outcomes  
+- Store interview stages   
 
 ---
 
-### 📊 Analytics Dashboard
+###  Analytics Dashboard
 
 - Total applications  
 - Interviews  
@@ -68,7 +67,7 @@ APPLIED → SCREENING → INTERVIEW → OFFER → REJECTED
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 Backend: Node.js, Express, Prisma  
 Database: SQLite  
@@ -105,7 +104,7 @@ frontend/
 
 ---
 
-## ⚙️ Setup & Installation
+##  Setup & Installation
 
 ### Clone repo
 
@@ -137,7 +136,7 @@ Frontend: http://localhost:3000
 
 ---
 
-## 🔌 API Examples
+##  API Examples
 
 ### Create Job
 
@@ -171,7 +170,7 @@ GET /analytics/summary
 
 ---
 
-## 📊 Example Output
+## Example Output
 
 ```
 {
@@ -184,7 +183,7 @@ GET /analytics/summary
 
 ---
 
-## 💡 Why I Built This
+##  Why I Built This
 
 After applying to hundreds of roles, I wanted a system to:
 
