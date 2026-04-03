@@ -3,35 +3,70 @@ import prisma from "../db/prisma.js";
 
 const router = express.Router();
 
+
+
+function detectRoleType(title) {
+  const t = title.toLowerCase();
+
+  if (t.includes("engineer") || t.includes("developer")) return "Engineering";
+  if (t.includes("data")) return "Data";
+  if (t.includes("support")) return "Support";
+
+  return "Other";
+}
+
+
+
+
 // CREATE job
 router.post("/", async (req, res) => {
   try {
     const { title, company, location, link } = req.body;
 
+    // Validation
     if (!title || !company) {
-      return res.status(400).json({ error: "Title and company required" });
+      return res.status(400).json({
+        error: "Title and company are required"
+      });
     }
 
+    // Auto classification
+    const roleType = detectRoleType(title);
+
     const job = await prisma.job.create({
-      data: { title, company, location, link },
+      data: {
+        title,
+        company,
+        location,
+        link,
+        roleType
+      }
     });
 
     res.status(201).json(job);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({
+      error: "Failed to create job"
+    });
   }
 });
 
+// ==========================
 // GET all jobs
+// ==========================
 router.get("/", async (req, res) => {
   try {
     const jobs = await prisma.job.findMany({
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: "desc" }
     });
 
     res.json(jobs);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({
+      error: "Failed to fetch jobs"
+    });
   }
 });
 

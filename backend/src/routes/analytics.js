@@ -29,4 +29,33 @@ router.get("/summary", async (req, res) => {
   }
 });
 
+// Weekly applications
+router.get("/weekly", async (req, res) => {
+  try {
+    const jobs = await prisma.job.findMany({
+      select: { dateApplied: true }
+    });
+
+    const weekly = {};
+
+    jobs.forEach(job => {
+      const date = new Date(job.dateApplied);
+
+      // Get year + week number
+      const start = new Date(date.getFullYear(), 0, 1);
+      const diff = (date - start + (start.getTimezoneOffset() - date.getTimezoneOffset()) * 60000);
+      const week = Math.floor(diff / (7 * 24 * 60 * 60 * 1000));
+
+      const key = `${date.getFullYear()}-W${week}`;
+
+      weekly[key] = (weekly[key] || 0) + 1;
+    });
+
+    res.json(weekly);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 export default router;
