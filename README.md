@@ -101,7 +101,8 @@ Automatically categorises roles based on title:
 
 ## 📁 Project Structure
 
-*backend/
+```bash
+backend/
 ├── src/
 │   ├── db/
 │   │   └── prisma.js
@@ -121,7 +122,7 @@ frontend/
 │   ├── api/
 │   │   └── api.js
 │   ├── App.js
-│   └── styles.css**
+│   └── styles.css
 
 ---
 
