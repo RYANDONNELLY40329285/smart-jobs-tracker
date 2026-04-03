@@ -15,7 +15,7 @@ jobs:
         working-directory: backend
 
     env:
-      DATABASE_URL: "file:./dev.db"   
+      DATABASE_URL: "file:./test.db"  
 
     steps:
       - name: Checkout repo
@@ -29,8 +29,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Setup Prisma DB
-        run: npx prisma migrate dev --name init
+      - name: Setup Prisma DB (non-interactive)
+        run: npx prisma db push   
 
       - name: Run tests
         run: npm run test:coverage
