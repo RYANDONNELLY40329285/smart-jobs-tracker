@@ -3,8 +3,9 @@ import prisma from "../db/prisma.js";
 
 const router = express.Router();
 
-
-
+// ==========================
+// AUTO ROLE DETECTION
+// ==========================
 function detectRoleType(title) {
   const t = title.toLowerCase();
 
@@ -15,22 +16,30 @@ function detectRoleType(title) {
   return "Other";
 }
 
+// ==========================
+// STATUS TRANSITIONS
+// ==========================
+const validTransitions = {
+  APPLIED: ["SCREENING"],
+  SCREENING: ["INTERVIEW", "REJECTED"],
+  INTERVIEW: ["OFFER", "REJECTED"],
+  OFFER: [],
+  REJECTED: []
+};
 
-
-
-// CREATE job
+// ==========================
+// CREATE JOB
+// ==========================
 router.post("/", async (req, res) => {
   try {
     const { title, company, location, link } = req.body;
 
-    // Validation
     if (!title || !company) {
       return res.status(400).json({
         error: "Title and company are required"
       });
     }
 
-    // Auto classification
     const roleType = detectRoleType(title);
 
     const job = await prisma.job.create({
@@ -46,14 +55,12 @@ router.post("/", async (req, res) => {
     res.status(201).json(job);
   } catch (err) {
     console.error(err);
-    res.status(500).json({
-      error: "Failed to create job"
-    });
+    res.status(500).json({ error: "Failed to create job" });
   }
 });
 
 // ==========================
-// GET all jobs
+// GET ALL JOBS
 // ==========================
 router.get("/", async (req, res) => {
   try {
@@ -64,39 +71,34 @@ router.get("/", async (req, res) => {
     res.json(jobs);
   } catch (err) {
     console.error(err);
-    res.status(500).json({
-      error: "Failed to fetch jobs"
-    });
+    res.status(500).json({ error: "Failed to fetch jobs" });
   }
 });
 
-// GET single job
+// ==========================
+// GET SINGLE JOB
+// ==========================
 router.get("/:id", async (req, res) => {
   try {
     const job = await prisma.job.findUnique({
       where: { id: Number(req.params.id) },
-      include: { notes: true, interviews: true },
+      include: { notes: true, interviews: true }
     });
 
-    if (!job) return res.status(404).json({ error: "Job not found" });
+    if (!job) {
+      return res.status(404).json({ error: "Job not found" });
+    }
 
     res.json(job);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch job" });
   }
 });
 
-// UPDATE job
-router.put("/:id", async (req, res) => {
-
-    const validTransitions = {
-  APPLIED: ["SCREENING"],
-  SCREENING: ["INTERVIEW", "REJECTED"],
-  INTERVIEW: ["OFFER", "REJECTED"],
-  OFFER: [],
-  REJECTED: []
-};
-
+// ==========================
+// UPDATE JOB STATUS
+// ==========================
 router.put("/:id", async (req, res) => {
   try {
     const { status } = req.body;
@@ -109,9 +111,9 @@ router.put("/:id", async (req, res) => {
       return res.status(404).json({ error: "Job not found" });
     }
 
-    const allowed = validTransitions[job.status];
+    const allowed = validTransitions[job.status] || [];
 
-    if (!allowed.includes(status)) {
+    if (!status || !allowed.includes(status)) {
       return res.status(400).json({
         error: `Invalid transition from ${job.status} → ${status}`
       });
@@ -124,29 +126,40 @@ router.put("/:id", async (req, res) => {
 
     res.json(updated);
   } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-
-
-});
-
-// DELETE job
-router.delete("/:id", async (req, res) => {
-  try {
-    await prisma.job.delete({
-      where: { id: Number(req.params.id) },
-    });
-
-    res.json({ message: "Deleted successfully" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+    res.status(500).json({ error: "Failed to update job" });
   }
 });
 
 // ==========================
-// ADD NOTE to a job
+// DELETE JOB
+// ==========================
+router.delete("/:id", async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+
+    const job = await prisma.job.findUnique({
+      where: { id }
+    });
+
+    if (!job) {
+      return res.status(404).json({ error: "Job not found" });
+    }
+
+    await prisma.job.delete({
+      where: { id }
+    });
+
+    res.json({ message: "Deleted successfully" });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to delete job" });
+  }
+});
+
+// ==========================
+// ADD NOTE
 // ==========================
 router.post("/:id/notes", async (req, res) => {
   try {
@@ -158,10 +171,7 @@ router.post("/:id/notes", async (req, res) => {
     }
 
     const note = await prisma.note.create({
-      data: {
-        content,
-        jobId
-      }
+      data: { content, jobId }
     });
 
     res.status(201).json(note);
@@ -172,7 +182,7 @@ router.post("/:id/notes", async (req, res) => {
 });
 
 // ==========================
-// GET notes for a job
+// GET NOTES
 // ==========================
 router.get("/:id/notes", async (req, res) => {
   try {
@@ -190,10 +200,8 @@ router.get("/:id/notes", async (req, res) => {
   }
 });
 
-
-
 // ==========================
-// ADD interview
+// ADD INTERVIEW
 // ==========================
 router.post("/:id/interviews", async (req, res) => {
   try {
@@ -223,7 +231,7 @@ router.post("/:id/interviews", async (req, res) => {
 });
 
 // ==========================
-// GET interviews
+// GET INTERVIEWS
 // ==========================
 router.get("/:id/interviews", async (req, res) => {
   try {
@@ -240,7 +248,5 @@ router.get("/:id/interviews", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch interviews" });
   }
 });
-
-
 
 export default router;
