@@ -1,5 +1,9 @@
 #  Smart Job Tracker
 ![CI](https://github.com/RYANDONNELLY40329285/smart-jobs-tracker/actions/workflows/ci.yml/badge.svg)
+![Node.js](https://img.shields.io/badge/Node.js-Backend-green)
+![Prisma](https://img.shields.io/badge/Prisma-ORM-blue)
+![SQLite](https://img.shields.io/badge/SQLite-Database-lightgrey)
+![Coverage](https://img.shields.io/badge/coverage-80%25-brightgreen)
 
 
 A full-stack job application tracking system with analytics, built to optimise and measure job search performance.
