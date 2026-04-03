@@ -1,7 +1,23 @@
+process.env.DATABASE_URL = "file:./test.db";
 import request from "supertest";
 import app from "../src/app.js";
 import { jest } from "@jest/globals";
+import { execSync } from "child_process";
 import prisma from "../src/db/prisma.js";
+
+
+beforeAll(async () => {
+  // Clean test DB before running tests
+
+    execSync("npx prisma db push", {
+    env: { ...process.env, DATABASE_URL: "file:./test.db" }
+  });
+
+
+  await prisma.interview.deleteMany();
+  await prisma.note.deleteMany();
+  await prisma.job.deleteMany();
+});
 
 describe("Jobs API", () => {
 
@@ -254,9 +270,7 @@ it("should allow valid status transitions", async () => {
 
 
 
-  afterAll(async () => {
-  await prisma.$disconnect();
-});
+
 
 it("should fail if status is missing", async () => {
   const create = await request(app)
@@ -307,5 +321,11 @@ it("should handle empty analytics", async () => {
   expect(res.statusCode).toBe(200);
 });
 
+
+  afterAll(async () => {
+
+  await prisma.$disconnect();
+
+});
 
 });
