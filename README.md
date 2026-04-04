@@ -189,4 +189,4 @@ After applying to hundreds of roles, I wanted a system to:
 
 - Track applications properly  
 - Analyse results  
-- Improve my job search using data  
+- Improve my job search using data   - 
